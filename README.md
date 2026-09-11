@@ -1,10 +1,16 @@
 # Snake Cluster
 
-![Snake Cluster arena](images/scene-thumbnail.png)
+![Snake Cluster arena](images/snakecluster.png)
 
 **Snake Cluster** is a real-time multiplayer snake arena for Decentraland. Guide a colorful snake through the sand, collect energy, grow longer, unlock cosmetics, and outlast the other snakes to claim the crown.
 
 The scene is an SDK7, four-parcel Decentraland experience with server-authoritative movement, food collection, collisions, scoring, and death handling.
+
+## Vision
+
+Many virtual worlds lose visitors after the first look because there is no clear, low-friction reason to interact with the people around them. **Snake Cluster** solves that by turning a Decentraland World into an instant social competition: players can join from desktop or mobile, understand the goal in seconds, collide, chase, steal dropped energy, compare scores, and come back to try for the crown again.
+
+The project is designed for the Friendzone spirit: a persistent, mobile-friendly multiplayer activity that gives strangers and friends a shared reason to stay in the same place, react to each other, and build small rivalries without needing a host, scheduled event, or complicated onboarding.
 
 ## How to play
 
