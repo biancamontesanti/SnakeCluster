@@ -314,7 +314,7 @@ function seededFoodPosition(index: number, attempt = 0): Vector3 {
 }
 
 function buildArena() {
-  const arenaFloor = createBox(Vector3.create(16, 0.05, 16), Vector3.create(29.4, 0.1, 29.4), Color4.White())
+  const arenaFloor = createBox(Vector3.create(16, 0.05, 16), Vector3.create(31.5, 0.1, 31.5), Color4.White())
   Material.setPbrMaterial(arenaFloor, {
     texture: Material.Texture.Common({
       src: 'assets/Textures/dcl-sand.png',
