@@ -1,0 +1,74 @@
+{
+  "ecs7": true,
+  "runtimeVersion": "7",
+  "display": {
+    "title": "Snake Cluster",
+    "description": "Enter Snake Cluster: collect energy, grow your snake, discover hats, and chase the crown in a colorful sand arena.",
+    "navmapThumbnail": "assets/images/Gemini_Generated_Image_s4u4xos4u4xos4u4_(1).jpeg",
+    "favicon": "favicon_asset"
+  },
+  "owner": "",
+  "contact": {
+    "name": "BIBI",
+    "email": ""
+  },
+  "main": "bin/index.js",
+  "tags": [
+    "game",
+    "social"
+  ],
+  "scene": {
+    "base": "-7,-9",
+    "parcels": [
+      "-7,-9",
+      "-7,-8",
+      "-6,-9",
+      "-6,-8"
+    ]
+  },
+  "spawnPoints": [
+    {
+      "name": "spawn1",
+      "default": true,
+      "position": {
+        "x": [
+          1,
+          2
+        ],
+        "y": [
+          0,
+          0
+        ],
+        "z": [
+          1,
+          2
+        ]
+      },
+      "cameraTarget": {
+        "x": 16,
+        "y": 1,
+        "z": 16
+      }
+    }
+  ],
+  "featureToggles": {
+    "voiceChat": "enabled",
+    "portableExperiences": "enabled",
+    "nearbyVoiceChat": "enabled"
+  },
+  "creator": "",
+  "skyboxConfig": {},
+  "landscapeTerrain": true,
+  "source": {
+    "origin": "creator-hub",
+    "projectId": "5d7358e3-84b1-41d4-b500-20288dd7d460"
+  },
+  "rating": "A",
+  "requiredPermissions": [
+    "ALLOW_TO_MOVE_PLAYER_INSIDE_SCENE"
+  ],
+  "worldConfiguration": {
+    "name": "bibi.dcl.eth"
+  },
+  "authoritativeMultiplayer": true
+}
