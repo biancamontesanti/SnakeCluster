@@ -71,6 +71,7 @@ const DEATH_AUDIO = 'assets/Audio/died.mp3'
 const ENEMY_DEATH_AUDIO = 'assets/Audio/enemy-death.mp3'
 const UI_CLICK_AUDIO = 'assets/Audio/button-sound.mp3'
 const SMALL_RUSTIC_FENCE_SRC = 'assets/asset-packs/small_rustic_fence/FenceWoodSmall_01/FenceWoodSmall_01.glb'
+const RUSTIC_FENCE_GROUND_Y = 0.78
 // Original meshes are baked into meter-sized copies by fit-headwear.cjs.
 // Keep all runtime scales in a normal range for mobile asset conversion.
 const MOBILE_HEADWEAR_SCALE = 0.8
@@ -328,14 +329,17 @@ function buildArena() {
     metallic: 0,
     castShadows: false
   })
-  const fenceCount = 25
-  const fenceStep = (ARENA_MAX - ARENA_MIN) / (fenceCount - 1)
+  const fenceInset = 0.9
+  const fenceStart = ARENA_MIN + fenceInset
+  const fenceEnd = ARENA_MAX - fenceInset
+  const fenceCount = 23
+  const fenceStep = (fenceEnd - fenceStart) / (fenceCount - 1)
   for (let module = 0; module < fenceCount; module++) {
-    const along = ARENA_MIN + module * fenceStep
-    createRusticFence(Vector3.create(along, 1, ARENA_MIN - 0.2), 90)
-    createRusticFence(Vector3.create(along, 1, ARENA_MAX + 0.2), 90)
-    createRusticFence(Vector3.create(ARENA_MIN - 0.2, 1, along), 0)
-    createRusticFence(Vector3.create(ARENA_MAX + 0.2, 1, along), 0)
+    const along = fenceStart + module * fenceStep
+    createRusticFence(Vector3.create(along, RUSTIC_FENCE_GROUND_Y, ARENA_MIN - 0.2), 90)
+    createRusticFence(Vector3.create(along, RUSTIC_FENCE_GROUND_Y, ARENA_MAX + 0.2), 90)
+    createRusticFence(Vector3.create(ARENA_MIN - 0.2, RUSTIC_FENCE_GROUND_Y, along), 0)
+    createRusticFence(Vector3.create(ARENA_MAX + 0.2, RUSTIC_FENCE_GROUND_Y, along), 0)
   }
 
 }
@@ -353,6 +357,13 @@ function createRusticFence(position: Vector3, yaw: number): Entity {
     invisibleMeshesCollisionMask: 0
   })
   return fence
+}
+
+function removeAuthoredFencePlaceholders() {
+  for (const name of ['Small Rustic Fence', 'Small Rustic Fence_2', 'Small Rustic Fence_3', 'Small Rustic Fence_4', 'Rustic Fence Door']) {
+    const entity = engine.getEntityOrNullByName(name)
+    if (entity !== null) engine.removeEntity(entity)
+  }
 }
 
 function buildSnake() {
@@ -1001,6 +1012,7 @@ function setupCamera() {
 }
 
 export function createSnakeExperiment() {
+  removeAuthoredFencePlaceholders()
   buildArena()
   buildSnake()
   buildFood()
