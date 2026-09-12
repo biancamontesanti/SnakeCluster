@@ -70,6 +70,9 @@ const EAT_AUDIO = 'assets/Audio/eat.mp3'
 const DEATH_AUDIO = 'assets/Audio/died.mp3'
 const ENEMY_DEATH_AUDIO = 'assets/Audio/enemy-death.mp3'
 const UI_CLICK_AUDIO = 'assets/Audio/button-sound.mp3'
+const ARENA_FENCE_SRC = 'assets/scene/fence.glb'
+const ARENA_FENCE_SCALE = 0.488
+const ARENA_FENCE_Y = 0.23
 // Original meshes are baked into meter-sized copies by fit-headwear.cjs.
 // Keep all runtime scales in a normal range for mobile asset conversion.
 const MOBILE_HEADWEAR_SCALE = 0.8
@@ -327,21 +330,16 @@ function buildArena() {
     metallic: 0,
     castShadows: false
   })
-  // Upgrade the existing four boundary meshes without changing collision limits.
-  // Repeat per metre instead of stretching one texture over a 31 m wall.
-  // Use short modules so the catalog texture remains detailed instead of being
-  // stretched over a 31 m face. Each module gets the normal 0..1 box UVs.
-  for (const [x, z, yaw] of [[16, 31.55, 0], [16, 0.45, 0], [31.55, 16, 90], [0.45, 16, 90]]) {
-    for (let module = 0; module < 8; module++) {
-      const along = 2.0 + module * 4.0
-      const wall = createBox(yaw === 0 ? Vector3.create(along, 0.34, z) : Vector3.create(x, 0.34, along), Vector3.create(3.86, 0.68, 0.44), Color4.White())
-      Transform.getMutable(wall).rotation = Quaternion.fromEulerDegrees(0, yaw, 0)
-      Material.setPbrMaterial(wall, {
-        texture: Material.Texture.Common({ src: 'assets/Textures/dcl-grey-flagstone.jpg' }),
-        albedoColor: Color4.fromHexString('#cfdbc1ff'), roughness: 0.94, metallic: 0
-      })
-    }
-  }
+  const fence = engine.addEntity()
+  Transform.create(fence, {
+    position: Vector3.create(16, ARENA_FENCE_Y, 16),
+    scale: Vector3.create(ARENA_FENCE_SCALE, ARENA_FENCE_SCALE, ARENA_FENCE_SCALE)
+  })
+  GltfContainer.create(fence, {
+    src: ARENA_FENCE_SRC,
+    visibleMeshesCollisionMask: 0,
+    invisibleMeshesCollisionMask: 0
+  })
 
 }
 
