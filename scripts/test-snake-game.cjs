@@ -327,7 +327,7 @@ test('spawned death food stays at eating height and has no mesh collider', () =>
 const uiCode = esbuild.buildSync({ stdin: { contents: fs.readFileSync(path.join(root, 'src/ui.tsx'), 'utf8') + '\nexport const testUi = { QuickTutorial, GameUi, openTutorial, layout, Leaderboard, RestScreen, CollectionMenu }', resolveDir: path.join(root, 'src'), loader: 'tsx' }, jsxFactory: 'ReactEcs.createElement', bundle: true, write: false, platform: 'node', format: 'cjs', external: ['@dcl/*', './snake-game'] }).outputFiles[0].text
 function uiClient(width, height, mobile, rows = []) {
   let starts = 0
-  const view = { phase: 'ready', menuSession: 1, menuOpen: false, musicEnabled: true, soundEnabled: true }
+  const view = { phase: 'ready', menuSession: 1, menuOpen: false, musicEnabled: true, soundEnabled: true, playReady: true, playStatus: '', waitingToStart: false }
   const uiModule = { exports: {} }
   const react = { createElement: (type, props, ...children) => ({ type, props: props || {}, children: children.flat(Infinity).filter(Boolean) }) }
   vm.runInNewContext(uiCode, {

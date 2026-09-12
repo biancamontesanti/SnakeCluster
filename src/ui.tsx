@@ -42,11 +42,21 @@ function Logo(height: number, l: Layout) {
   return <UiEntity uiTransform={{ width: l.p(height * 1024 / 448), height: l.p(height), flexShrink: 0 }} uiBackground={{ texture: { src: LOGO }, textureMode: 'stretch', color: Color4.White() }} />
 }
 
-function Button(label: string, width: number, action: () => void, l: Layout, primary = true, height = 58) {
-  const onClick = () => { playUiClickSound(); action() }
-  return <UiEntity uiTransform={{ width: l.p(width), height: l.p(height), flexShrink: 0, alignItems: 'center', justifyContent: 'center', borderRadius: l.p(12), borderWidth: 1, borderColor: primary ? C.lime : C.line }} uiBackground={{ color: primary ? C.lime : C.soft }} onMouseDown={onClick}>
-    {Text(label, '100%', height, l.mobile ? 13 : 17, l, primary ? C.ink : C.white)}
+function Button(label: string, width: number, action: () => void, l: Layout, primary = true, height = 58, disabled = false) {
+  const onClick = () => {
+    if (disabled) return
+    playUiClickSound()
+    action()
+  }
+  return <UiEntity uiTransform={{ width: l.p(width), height: l.p(height), flexShrink: 0, alignItems: 'center', justifyContent: 'center', borderRadius: l.p(12), borderWidth: 1, borderColor: disabled ? C.shade : primary ? C.lime : C.line, opacity: disabled ? 0.72 : 1 }} uiBackground={{ color: disabled ? C.soft : primary ? C.lime : C.soft }} onMouseDown={onClick}>
+    {Text(label, '100%', height, l.mobile ? 13 : 17, l, disabled ? C.muted : primary ? C.ink : C.white)}
   </UiEntity>
+}
+
+function PlayButton(label: string, width: number, l: Layout, height = 58) {
+  const view = getExperimentView()
+  const disabled = !view.playReady
+  return Button(disabled ? view.playStatus || 'LOADING...' : label, width, startRun, l, true, height, disabled)
 }
 
 function Lock(size: number, l: Layout) {
@@ -120,7 +130,7 @@ function CollectionMenu(l: Layout) {
     <UiEntity uiTransform={{ width: l.p(footerWidth), height: l.p(58), flexShrink: 0, flexDirection: 'row', justifyContent: 'space-between' }}>
       {Button('BACK', footerWidth * .21, toggleMenu, l, false)}
       {Button('HOW TO PLAY', footerWidth * .33, openTutorial, l, false)}
-      {Button(view.phase === 'gameover' ? 'PLAY AGAIN' : 'PLAY', footerWidth * .42, startRun, l)}
+      {PlayButton(view.phase === 'gameover' ? 'PLAY AGAIN' : 'PLAY', footerWidth * .42, l)}
     </UiEntity>
     {!l.mobile ? Text('Hold left click + drag, A / D or arrows to steer   |   F, W or Shift to boost', '100%', 42, 12, l, C.muted) : null}
   </UiEntity>
@@ -201,7 +211,7 @@ function RestScreen(l: Layout) {
       {Text(died ? view.resultMessage.replace('You died — ', '') : 'Collect energy. Discover rare hats. Chase the crown.', '100%', 34, l.mobile ? 11 : 13, l, C.white)}
     </UiEntity>
     <UiEntity uiTransform={{ width: l.p(actionWidth), height: l.p(l.mobile ? 52 : 58), flexShrink: 0, alignItems: 'center', justifyContent: 'center' }}>
-      {Button(died ? 'PLAY AGAIN' : 'PLAY', actionWidth, startRun, l, true, l.mobile ? 52 : 58)}
+      {PlayButton(died ? 'PLAY AGAIN' : 'PLAY', actionWidth, l, l.mobile ? 52 : 58)}
     </UiEntity>
     <UiEntity uiTransform={{ width: l.p(actionWidth), height: l.p(l.mobile ? 48 : 54), margin: { top: l.p(mainGap) }, flexShrink: 0, flexDirection: 'row', justifyContent: 'space-between' }}>
       {Button('SKINS', secondaryWidth, toggleMenu, l, false, l.mobile ? 48 : 54)}
@@ -216,6 +226,7 @@ function RestScreen(l: Layout) {
 }
 
 function QuickTutorial(l: Layout) {
+  const view = getExperimentView()
   const width = Math.min(l.width - 24, l.mobile ? 580 : 760)
   const padding = l.short ? 12 : 24
   const innerWidth = width - padding * 2
@@ -241,10 +252,10 @@ function QuickTutorial(l: Layout) {
     </UiEntity>)}
     <UiEntity uiTransform={{ width: '100%', height: l.p(48), flexShrink: 0, margin: { top: l.p(12) }, flexDirection: 'row', justifyContent: 'space-between' }}>
       {Button('BACK', innerWidth * .32, () => { if (paged && tutorialPage > 0) tutorialPage--; else tutorialOpen = false }, l, false)}
-      {Button(paged && tutorialPage === 0 ? 'NEXT' : 'GOT IT - PLAY', innerWidth * .64, () => {
+      {Button(paged && tutorialPage === 0 ? 'NEXT' : view.playReady ? 'GOT IT - PLAY' : view.playStatus || 'LOADING...', innerWidth * .64, () => {
         if (paged && tutorialPage === 0) tutorialPage++
-        else { tutorialOpen = false; startRun() }
-      }, l)}
+        else if (view.playReady) { tutorialOpen = false; startRun() }
+      }, l, true, 48, !view.playReady && !(paged && tutorialPage === 0))}
     </UiEntity>
   </UiEntity>
 }

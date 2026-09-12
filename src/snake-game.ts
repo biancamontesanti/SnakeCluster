@@ -36,7 +36,7 @@ import { getPlayer } from '@dcl/sdk/src/players'
 import { movePlayerTo } from '~system/RestrictedActions'
 import { mouseTurnRate } from './steering'
 import { SnakeLifecycle, touchesBody } from './snake-lifecycle'
-import { FOOD_PICKUP_RADIUS_SQUARED, SharedFood, MatchPlayer, SavedScore, SnakeSnapshot, room } from './multiplayer-state'
+import { FOOD_PICKUP_RADIUS_SQUARED, SharedFood, MatchPlayer, SavedScore, ServerStatus, SnakeSnapshot, room } from './multiplayer-state'
 import { serverConnection } from './server-connection'
 import { headCrossesBody, longestLiving, SNAKE_STALE_MS } from './combat'
 import { MOVEMENT_INTERVAL, NetworkClock, Motion, SnapshotTrack, PresentationClock } from './netcode'
@@ -62,6 +62,7 @@ const TAIL_MIN_SCALE = 0.45
 const BODY_COLLISION_RADIUS_SQUARED = 0.0529
 const START_SEGMENTS = 9
 const FOOD_COUNT = 40
+const SERVER_FOOD_COUNT = 60
 const FOOD_Y = 0.28
 const FOOD_MIN_SPACING_SQUARED = 0.64
 const TEST_SECONDS = 300
@@ -679,6 +680,21 @@ function setupMultiplayer() {
   room.onMessage('pong', message => networkClock.accept(message.sentAt, message.serverAt, Date.now()))
 }
 
+function playReadiness() {
+  const connection = serverConnection()
+  if (!connection.ready) return { ready: false, message: connection.message || 'LOADING MATCH...' }
+  const status = [...engine.getEntitiesWith(ServerStatus)]
+    .map(([, value]) => value)
+    .filter(value => value.epoch === connection.epoch)
+    .sort((a, b) => b.heartbeat - a.heartbeat)[0]
+  if (status?.loading) return { ready: false, message: 'LOADING MATCH...' }
+  const foodLoaded = [...engine.getEntitiesWith(SharedFood)]
+    .filter(([, food]) => food.epoch === connection.epoch && !food.dropped)
+    .length
+  if (foodLoaded < SERVER_FOOD_COUNT) return { ready: false, message: `LOADING FOOD ${foodLoaded}/${SERVER_FOOD_COUNT}` }
+  return { ready: true, message: '' }
+}
+
 function renderOwnSnake(dt = 1 / 60) {
   const displayed = ownTrack.sample(presentationClock.time)
   if (!displayed?.points.length || !Transform.has(head)) return
@@ -1124,7 +1140,12 @@ function updateFace(headPosition: Vector3) {
 
 export function startRun() {
   ensureThemePlaying()
-  if (!serverConnection().ready) { waitingToStart = true; return }
+  const readiness = playReadiness()
+  if (!readiness.ready) {
+    waitingToStart = true
+    resultMessage = readiness.message
+    return
+  }
   waitingToStart = false
   refreshPlayerProfile()
   phase = 'running'
@@ -1837,6 +1858,7 @@ export function snakeGameSystem(dt: number) {
 }
 
 export function getExperimentView() {
+  const readiness = playReadiness()
   return {
     networkRttMs: networkClock.rttMs,
     phase,
@@ -1864,6 +1886,9 @@ export function getExperimentView() {
     chestActive,
     chestSequence,
     platform: getPlatform() ?? 'detecting',
+    playReady: readiness.ready,
+    playStatus: readiness.message,
+    waitingToStart,
     uiElapsed
     ,musicEnabled
     ,soundEnabled
