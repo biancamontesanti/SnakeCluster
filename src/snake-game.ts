@@ -70,9 +70,6 @@ const EAT_AUDIO = 'assets/Audio/eat.mp3'
 const DEATH_AUDIO = 'assets/Audio/died.mp3'
 const ENEMY_DEATH_AUDIO = 'assets/Audio/enemy-death.mp3'
 const UI_CLICK_AUDIO = 'assets/Audio/button-sound.mp3'
-const ARENA_FENCE_SRC = 'assets/scene/fence.glb'
-const ARENA_FENCE_SCALE = 0.488
-const ARENA_FENCE_Y = 0.23
 // Original meshes are baked into meter-sized copies by fit-headwear.cjs.
 // Keep all runtime scales in a normal range for mobile asset conversion.
 const MOBILE_HEADWEAR_SCALE = 0.8
@@ -272,13 +269,6 @@ function createBox(position: Vector3, scale: Vector3, color: Color4): Entity {
   return entity
 }
 
-function removeAuthoredFencePlaceholders() {
-  for (const name of ['Small Rustic Fence', 'Small Rustic Fence_2', 'Small Rustic Fence_3', 'Small Rustic Fence_4', 'Rustic Fence Door']) {
-    const entity = engine.getEntityOrNullByName(name)
-    if (entity !== null) engine.removeEntity(entity)
-  }
-}
-
 function createSphere(position: Vector3, scale: Vector3, color: Color4): Entity {
   const entity = engine.addEntity()
   Transform.create(entity, { position, scale })
@@ -336,16 +326,6 @@ function buildArena() {
     roughness: 0.98,
     metallic: 0,
     castShadows: false
-  })
-  const fence = engine.addEntity()
-  Transform.create(fence, {
-    position: Vector3.create(16, ARENA_FENCE_Y, 16),
-    scale: Vector3.create(ARENA_FENCE_SCALE, ARENA_FENCE_SCALE, ARENA_FENCE_SCALE)
-  })
-  GltfContainer.create(fence, {
-    src: ARENA_FENCE_SRC,
-    visibleMeshesCollisionMask: 0,
-    invisibleMeshesCollisionMask: 0
   })
 
 }
@@ -996,7 +976,6 @@ function setupCamera() {
 }
 
 export function createSnakeExperiment() {
-  removeAuthoredFencePlaceholders()
   buildArena()
   buildSnake()
   buildFood()

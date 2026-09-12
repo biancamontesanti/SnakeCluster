@@ -2,6 +2,124 @@
   "version": 1,
   "components": [
     {
+      "name": "core::Transform",
+      "jsonSchema": {
+        "type": "object",
+        "properties": {
+          "position": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              },
+              "z": {
+                "type": "number"
+              }
+            }
+          },
+          "scale": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              },
+              "z": {
+                "type": "number"
+              }
+            }
+          },
+          "rotation": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              },
+              "z": {
+                "type": "number"
+              },
+              "w": {
+                "type": "number"
+              }
+            }
+          },
+          "parent": {
+            "type": "integer"
+          }
+        },
+        "serializationType": "transform"
+      },
+      "data": {
+        "513": {
+          "json": {
+            "position": {
+              "x": 16,
+              "y": 0,
+              "z": 15.75
+            },
+            "scale": {
+              "x": 0.49000000953674316,
+              "y": 0.49000000953674316,
+              "z": 0.49000000953674316
+            },
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            },
+            "parent": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "core::GltfContainer",
+      "jsonSchema": {
+        "type": "object",
+        "properties": {},
+        "serializationType": "protocol-buffer",
+        "protocolBuffer": "PBGltfContainer"
+      },
+      "data": {
+        "513": {
+          "json": {
+            "src": "assets/Models/fence/fence.glb",
+            "visibleMeshesCollisionMask": 0,
+            "invisibleMeshesCollisionMask": 3
+          }
+        }
+      }
+    },
+    {
+      "name": "core-schema::Name",
+      "jsonSchema": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "serializationType": "utf8-string"
+          }
+        },
+        "serializationType": "map"
+      },
+      "data": {
+        "513": {
+          "json": {
+            "value": "fence.glb"
+          }
+        }
+      }
+    },
+    {
       "name": "core-schema::Tags",
       "jsonSchema": {
         "type": "object",
@@ -75,7 +193,9 @@
               {
                 "entity": 0,
                 "open": true,
-                "children": []
+                "children": [
+                  513
+                ]
               },
               {
                 "entity": 1,
@@ -84,8 +204,36 @@
               {
                 "entity": 2,
                 "children": []
+              },
+              {
+                "entity": 513,
+                "children": []
               }
             ]
+          }
+        }
+      }
+    },
+    {
+      "name": "inspector::TransformConfig",
+      "jsonSchema": {
+        "type": "object",
+        "properties": {
+          "porportionalScaling": {
+            "type": "boolean",
+            "serializationType": "optional",
+            "optionalJsonSchema": {
+              "type": "boolean",
+              "serializationType": "boolean"
+            }
+          }
+        },
+        "serializationType": "map"
+      },
+      "data": {
+        "513": {
+          "json": {
+            "porportionalScaling": true
           }
         }
       }
@@ -446,25 +594,25 @@
             "layout": {
               "parcels": [
                 {
-                  "x": -7,
-                  "y": -9
+                  "x": -4,
+                  "y": 0
                 },
                 {
-                  "x": -7,
-                  "y": -8
+                  "x": -4,
+                  "y": 1
                 },
                 {
-                  "x": -6,
-                  "y": -9
+                  "x": -3,
+                  "y": 0
                 },
                 {
-                  "x": -6,
-                  "y": -8
+                  "x": -3,
+                  "y": 1
                 }
               ],
               "base": {
-                "x": -7,
-                "y": -9
+                "x": -4,
+                "y": 0
               }
             },
             "silenceVoiceChat": false,
