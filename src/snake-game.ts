@@ -272,6 +272,13 @@ function createBox(position: Vector3, scale: Vector3, color: Color4): Entity {
   return entity
 }
 
+function removeAuthoredFencePlaceholders() {
+  for (const name of ['Small Rustic Fence', 'Small Rustic Fence_2', 'Small Rustic Fence_3', 'Small Rustic Fence_4', 'Rustic Fence Door']) {
+    const entity = engine.getEntityOrNullByName(name)
+    if (entity !== null) engine.removeEntity(entity)
+  }
+}
+
 function createSphere(position: Vector3, scale: Vector3, color: Color4): Entity {
   const entity = engine.addEntity()
   Transform.create(entity, { position, scale })
@@ -989,6 +996,7 @@ function setupCamera() {
 }
 
 export function createSnakeExperiment() {
+  removeAuthoredFencePlaceholders()
   buildArena()
   buildSnake()
   buildFood()
