@@ -13,6 +13,7 @@ import {
   MainCamera,
   Material,
   MaterialTransparencyMode,
+  MeshCollider,
   MeshRenderer,
   PointerLock,
   PrimaryPointerInfo,
@@ -327,6 +328,15 @@ function buildArena() {
     metallic: 0,
     castShadows: false
   })
+  for (const [x, z, yaw] of [[16, 31.55, 0], [16, 0.45, 0], [31.55, 16, 90], [0.45, 16, 90]]) {
+    const wall = engine.addEntity()
+    Transform.create(wall, {
+      position: Vector3.create(x, 1, z),
+      rotation: Quaternion.fromEulerDegrees(0, yaw, 0),
+      scale: Vector3.create(31.5, 2, 0.5)
+    })
+    MeshCollider.setBox(wall)
+  }
 
 }
 
