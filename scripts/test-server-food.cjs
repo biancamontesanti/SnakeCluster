@@ -75,6 +75,13 @@ handlers.get('snakeDeath')({ payload: JSON.stringify({
 assert.equal(alice.state.phase, 'running', 'client cannot decide death')
 send('alice', 4, { phase: 'gameover' })
 assert.equal(alice.state.phase, 'running', 'client terminal snapshot cannot decide death')
+send('charlie', 1)
+const charlie = peers.get('charlie')
+charlie.started = now - 3000
+charlie.motion = { x: 0.7, z: 16, heading: 0, spent: 0, boostTimer: 0 }
+charlie.points = [{ x: 0.7, z: 16 }, { x: 2, z: 16 }]
+tick()
+assert.equal(charlie.state.phase, 'gameover', 'server kills when the snake reaches the fence limit')
 // Deterministic server fixture puts a head on a crossing course after spawn protection.
 alice.started = now - 3000; bob.started = now - 3000
 alice.motion = { x: 15.7, z: 16, heading: Math.PI/2, spent: 0, boostTimer: 0 }

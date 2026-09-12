@@ -30,8 +30,11 @@ const pendingFrames = new Map<Entity, string>()
 // Positions still come from openPosition(), so spacing and pickup authority
 // remain unchanged.
 const INITIAL_FOOD_COUNT = 60
+const ARENA_MIN = 1.25
+const ARENA_MAX = 30.75
 
 function validPoint(p: Point) { return p && Number.isFinite(p.x) && Number.isFinite(p.z) && p.x >= .25 && p.x <= 31.75 && p.z >= .25 && p.z <= 31.75 }
+function hitsArenaFence(p: Point) { return p.x < ARENA_MIN || p.x > ARENA_MAX || p.z < ARENA_MIN || p.z > ARENA_MAX }
 function openPosition() {
   let result = Vector3.create(2, .28, 2)
   for (let attempt = 0; attempt < 40; attempt++) {
@@ -153,7 +156,7 @@ function combatTick(now: number) {
   const hits: Array<{ victim: Peer; killer?: Peer; reason: string }> = []
   for (const victim of live) {
     const head = victim.motion!, from = previous.get(victim)!
-    if (head.x < 1.25 || head.x > 30.75 || head.z < 1.25 || head.z > 30.75) {
+    if (hitsArenaFence(head)) {
       hits.push({ victim, reason: 'Arena collision' }); continue
     }
     if (now - victim.started < SPAWN_SHIELD_MS) continue

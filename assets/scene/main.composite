@@ -93,7 +93,7 @@
         "513": {
           "json": {
             "src": "assets/Models/fence/fence.glb",
-            "visibleMeshesCollisionMask": 0,
+            "visibleMeshesCollisionMask": 3,
             "invisibleMeshesCollisionMask": 0
           }
         }

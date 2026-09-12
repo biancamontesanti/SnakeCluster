@@ -199,6 +199,11 @@ test('real visible body contact still kills instantly', () => {
   const c = client(); c.visibleSelfHit()
   assert.equal(c.checkCollision(head).reason, 'Self collision')
 })
+test('arena fence limit kills the local snake immediately', () => {
+  const c = client()
+  assert.equal(c.checkCollision({ x: 1.2, y: .32, z: 16 }).reason, 'Arena collision')
+  assert.equal(c.checkCollision({ x: 30.8, y: .32, z: 16 }).reason, 'Arena collision')
+})
 test('death drops remove a ghost body when the death message is missing', () => {
   const c = client(); c.receiveSnakeState(packet(), 'peer'); c.updateRemoteSnakes(.1)
   assert.ok(c.checkCollision(head))
