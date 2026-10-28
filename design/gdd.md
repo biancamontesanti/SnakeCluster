@@ -4,13 +4,13 @@
 
 **Updated:** 2026-10-28
 
-**Status:** Playable SDK7 project; the four week plan below is proposed work
+**Status:** Playable SDK7 project; future versions below are design goals
 
 | | Snake Cluster |
 | --- | --- |
-| Public experience title | Snake Cluster. Title clearance has not been documented; the game's custom art and third party asset licenses should be checked before a program submission. |
+| Public experience title | Snake Cluster — an original game created by BIBI. |
 | Deployment target | Decentraland World `bibi.dcl.eth`, as configured in `scene.json`. A public deployment was not verified for this document. |
-| Creator / team | BIBI is named in the scene metadata; repository owner: [biancamontesanti](https://github.com/biancamontesanti/SnakeCluster). Team size and public contact are not recorded in the project. |
+| Creator / team | BIBI — solo creator (1 person). GitHub: [biancamontesanti](https://github.com/biancamontesanti/SnakeCluster). |
 | Source | [SnakeCluster repository](https://github.com/biancamontesanti/SnakeCluster) |
 | Platform | Desktop and mobile Decentraland, in a four parcel World scene |
 
@@ -23,8 +23,8 @@
 | **Player promise** | Become a colorful snake, eat energy to grow, spend length to boost, and outmaneuver other players for the crown. |
 | **Primary player** | A Decentraland visitor who wants a quick, readable multiplayer game with friends or strangers, including on a phone. |
 | **Current status** | Playable scene with authoritative movement, food, collisions, death drops, cosmetics, a crown, and scoreboards. Automated checks exist; public player count and mobile performance have not been verified here. |
-| **Next release goal** | Make the first minutes and cross platform controls consistently clear, prove multiplayer performance, and add a concrete next day return reason without changing the fair core rules. |
-| **Live outcome after proposed four weeks** | A reliable always open arena with a tested mobile experience, durable cosmetic progress, and one daily challenge that gives returning players a fresh target. These are goals, not current features. |
+| **Next release goal** | Expand the Dune arena substantially and make its terrain, snakes, lighting, and camera feel more three dimensional while keeping the current game fair and readable. |
+| **Live outcome after proposed four weeks** | A larger Dune arena with a tested 3D visual pass on desktop and mobile. Collectable powers and temporary invincibility are the following version, not current features. |
 
 ---
 
@@ -103,7 +103,7 @@ The server owns movement, boost cost, food, pickups, collision results, deaths, 
 
 ### 4.1 The next day sentence
 
-> Today, a player who enjoyed Snake Cluster can return to beat a durable personal best or reclaim the crown from whoever is online. The project has **no daily reset, streak, or reminder yet**. The proposed next release adds one rotating daily challenge so the next day's goal is explicit.
+> Today, a player who enjoyed Snake Cluster can return to beat a durable personal best or reclaim the crown from whoever is online. The project has **no daily reset, streak, or reminder yet**. Later versions can add new arena experiences and powers as reasons to return.
 
 ### 4.2 Progression chain
 
@@ -113,7 +113,7 @@ The server owns movement, boost cost, food, pickups, collision results, deaths, 
 | --- | --- | --- | --- |
 | **End of first life** | Personal best score is saved by the server. Energy earned during this client session also counts toward special skin thresholds. | Retry with a higher target and choose another unlocked skin. | Current score, name, skin, and crown position in the live match. |
 | **End of first visit** | Best score persists. Special skin progress and hats are **session local today**; they should not be described as durable rewards. | The player can return to beat the stored score. | Their best score on the all time board. |
-| **Proposed next release** | Add server stored cosmetic unlocks and one daily challenge completion record. | A returning player can pursue a new target while still competing under equal gameplay rules. | An earned cosmetic and challenge completion marker, if implemented. |
+| **Future versions** | A larger 3D Dune arena comes first, followed by collectable powers. Persistent cosmetic unlocks and daily challenges remain later possibilities. | A returning player discovers a richer arena and gains new tactical choices without losing the original snake loop. | Powers are visible in play; any future cosmetic progress must be stored before it is described as permanent. |
 
 Current cosmetics: Violet, Aqua, Lime, Solar, and Rose are available immediately. Royal unlocks at 75 cumulative session energy, Inferno at 200, and Diamond at 500. A chest favors an unowned Pirate, Santa, Sombrero, or Witch hat. The first chest is eligible after about 75–165 seconds of active play; later chests use a 180–360 second interval. Cosmetics provide expression, not a speed or hit area advantage. There is no currency or tradable reward.
 
@@ -122,9 +122,9 @@ Current cosmetics: Violet, Aqua, Lime, Solar, and Rose are available immediately
 | Hook | Trigger | Anticipation | Reminder and fallback | Status |
 | --- | --- | --- | --- | --- |
 | **Personal best and crown rivalry** | Available whenever the World is open and another run can begin. | Beat yesterday's score or take the live crown. | The all time board and current leader are visible in game; no external reminder exists. | Implemented. |
-| **Daily Crown Challenge** | Proposed: one server selected objective rotates at 00:00 UTC, such as collect 20 energy in one life, survive 3 minutes, or earn one rival kill. | A named objective changes the next visit without changing the arena or giving a power advantage. | Proposed challenge card in the entry and death menus; if no social reminder is posted, the card still appears on arrival. | Planned for the next release; not implemented. |
+| **New Dune experience and powers** | Proposed: a substantially larger 3D Dune arena, then power capsules that players collect and release at a chosen moment. | New routes, more room for rivals, and a tactical decision about when to use a held power. | The arena and power icon are visible on arrival; no external reminder is required. | Planned across future versions; not implemented. |
 
-The challenge must use server confirmed events and be equally available to a solo player when its objective permits it. Rival kill objectives should be skipped during quiet hours or selected only when enough players are present. No streak punishment is proposed. A missed day simply brings a new objective.
+Future powers must be available through play, have clear visual feedback, and use server confirmed pickup and activation. A rotating daily challenge can be considered after the larger arena and powers are working; it is not part of the next version.
 
 ---
 
@@ -164,9 +164,11 @@ The challenge must use server confirmed events and be equally available to a sol
 
 ## 7. World, Look & Audio
 
-**World.** Snake Cluster is an always open sand arena inside a four parcel Decentraland World. The fence gives the space a clear boundary; the surrounding red landscape frames the play area. The ordinary avatar is hidden during snake play, then restored when the player leaves game mode.
+**World.** Snake Cluster is an always open sand arena inside a four parcel Decentraland World. The fence gives the space a clear boundary; the surrounding red landscape frames the play area. The ordinary avatar is hidden during snake play, then restored when the player leaves game mode. The next version expands this arena substantially; its exact parcel layout is a future implementation decision, not a change to the current scene.
 
 **Visual direction.** Bright snakes and small colorful energy items contrast against warm sand. Compact overlapping segments read as one body; embedded eyes keep the head expressive. Fallen energy inherits the defeated snake's colors. The moving crown makes leadership visible without opening a board. Signature shot: several snakes crossing the sand, one crowned, with fresh energy scattered where a rival fell.
+
+**Next visual direction.** Make the arena feel like a larger 3D dune landscape: sculpted sand forms, layered rocks and vegetation, stronger depth from the chase camera, grounded shadows, and a more volumetric snake body. The playable route and lethal fence must stay easy to read. Decorative dunes can create depth without silently changing the snake's horizontal movement or server collision rules.
 
 **Audio.** Music, pickup, death, enemy death, and menu feedback are distinct. Menu buttons use the Decentraland UI click sound. Music and effects have separate toggles. Audio confirms actions but does not carry exclusive gameplay information.
 
@@ -188,22 +190,42 @@ The table is a design comparison, not a claim of user research or performance da
 
 ---
 
-## 9. Proposed Four Week Plan
+## 9. Next Versions
 
-The current playable game already contains the core loop. This is a **next release plan**, not a claim that these features or tests are complete.
+These are **planned design steps**, not features already in the playable build. The current 32×32 m arena and its rules remain the baseline for comparison.
+
+| Version | Main change | Player payoff | Release gate |
+| --- | --- | --- | --- |
+| **v1.1 — Dune XL** | Make the arena substantially larger and give it a stronger 3D dune identity. A 64×64 m play area is the first size target, subject to scene layout and performance validation. | More room for long snakes, escapes, interceptions, and exploration without losing sight of food or the fence. | Desktop/mobile readability, food availability, spawn fairness, authoritative boundary tests, and acceptable frame rate with several snakes. |
+| **v1.2 — Power Capsules** | Add collectible power capsules that a snake can carry and release or activate with a dedicated action. Start with temporary invincibility. | Players choose *when* to spend a rare power, creating tactical moments beyond boost. | Server verified pickup/use, visible activation, balanced duration and spawn rate, and usable controls on desktop and mobile. |
+| **v1.3 — Power Variety** | Add more powers only after the first one proves fun and fair. Candidate powers include a food magnet or a short trail effect; each needs its own counterplay and visual language. | More different choices across repeated runs. | No power makes the original movement, food, crown, or body collision strategy irrelevant. |
+
+### v1.1 — a larger 3D Dune arena
+
+Grow the space first, then tune food density and spawn distribution for the new size; simply multiplying the current 60 food entities by four may exceed the scene's performance budget. Build distinctive dune shapes, rock formations, vegetation, ground textures, shadows, and a camera composition with more depth. Keep the path immediately ahead, snake bodies, food, and arena limit clearly visible. The floor can look sculpted while snake movement stays on the current horizontal plane until vertical gameplay is separately designed and tested.
+
+The arena fence, invisible avatar boundary, client presentation, and server lethal bounds must all be recalibrated together. Choose the final parcel layout before implementation; changing parcels will also affect scene coordinates and Creator Hub content. A larger arena succeeds only if a new player still finds food quickly and other players remain visible enough for rivalry.
+
+### v1.2 — collect, carry, and release powers
+
+Power capsules appear in the arena as a distinct collectible, separate from normal food. A snake can hold **one charge** at a time. The HUD shows the held power and its ready state; a dedicated button releases or activates it. The server decides capsule spawn, pickup ownership, use, duration, and expiration. Clients show the effect immediately after confirmation, without deciding the competitive result themselves. Powers are found through play, not purchased for an advantage.
+
+The first power is **temporary invincibility**. Proposed starting balance: three seconds of protection from collisions with snake bodies, a clear glow and countdown, no stacking, and a cooldown before another capsule can be used. The arena fence remains lethal so the power cannot be used to leave the play area. This is a prototype rule and must be tuned with multiplayer tests; the game must show exactly when protection begins and ends.
+
+Add the power action to How to Play when this version ships. On mobile, its button must not overlap steering or boost. On desktop, it needs a reliable key or button distinct from those controls. Until the power system passes tests, the current game has no invincibility mechanic.
+
+### Proposed four week path to v1.1
 
 | Week | Playable outcome and evidence |
 | --- | --- |
-| **1 — Baseline** | Run an unprompted first minute test with at least three new visitors; record time to Play, first pickup, first boost, first death, and whether the death cause is understood. Reproduce current desktop and mobile build checks. |
-| **2 — Fairness and social test** | Test at one, two, and five simultaneous players. Verify crown handoff, simultaneous collisions, 45 second remains, late join visibility, server recovery, and no duplicate kill awards. Fix any observed rule mismatch. |
-| **3 — Durable return hook** | Store cosmetic unlocks and daily challenge completion on the server, add the daily challenge card, and test the UTC rotation and solo eligible objective selection. Do not add competitive stat bonuses. |
-| **4 — Mobile and release pass** | Test touch controls and HUD on a representative mid range phone with five snakes; reach the 30 FPS target, run a public World smoke test, document final controls, and verify that the first minute and replay tests pass. |
+| **1 — Size and route prototype** | Greybox the larger arena, test spawn positions, food reachability, fence visibility, and five player density on desktop and mobile. |
+| **2 — Dune art pass** | Add sculpted dunes, layered props, materials, shadows, and a more dimensional snake look while preserving readable hit shapes. |
+| **3 — Rule and performance alignment** | Update server bounds, avatar colliders, food distribution, camera range, and client visuals together; run collision and late join regression checks. |
+| **4 — Player validation** | Run unprompted first minute tests and mobile five player performance tests. Ship v1.1 only if controls, fairness, food access, and the 30 FPS target pass. |
 
-**What keeps it changing after launch.** Live opponents and changing food/remains already create variation. A server selected daily objective would add a named next day reason without a new map. If the daily feature slips, the existing score and crown loop remains playable; the GDD and UI must not claim a daily challenge until it ships.
+After v1.1, prototype v1.2 powers in the expanded arena. v1.3 depends on evidence from that first power rather than a fixed release date. Daily challenges and permanent cosmetic storage remain separate later ideas. No paid power upgrades, tradable rewards, or global round timer are planned for these versions.
 
-**What is outside this release.** A second arena, paid power upgrades, tradable rewards, global round timers, and a complex quest system. Cosmetics remain visual only.
-
-**Top risk and fallback.** The biggest product risk is that high latency or crowded scenes make snake steering and collisions feel unfair even when the server is correct. First measure five player desktop/mobile sessions and inspect confirmed pose presentation. If a device cannot meet the target, reduce visual entity load and adjust presentation buffering while preserving server decisions; do not give clients authority over movement or death.
+**Top risk and fallback.** A bigger, more detailed arena may reduce mobile performance or make encounters too rare. Measure from the play camera at five players; if either problem appears, reduce decorative detail, tighten the useful play area, and tune food/spawn zones before adding powers. Keep the server authoritative for every boundary, pickup, and power result.
 
 ---
 
@@ -215,8 +237,10 @@ The current playable game already contains the core loop. This is a **next relea
 | Cross platform control | One controlled 60 second run with an intentional boost on desktop **and** mobile. | Desktop mechanical smoke is documented in `design/01-find-the-fun/`; creator feel pass and mobile pass remain unreported. |
 | Replay appeal | At least three voluntarily started runs in a five minute creator test. | Earlier prototype hypothesis was deferred; no result should be claimed. |
 | Multiplayer fairness | Server confirmed wall, self, and rival contacts end exactly one life; false client death/position reports do not decide outcomes. | Automated server and gameplay regression checks cover these cases. |
-| Return appeal | Observe players returning the next day and identify whether score, rivals, or the proposed daily objective brought them back. | Not measured. |
+| Return appeal | Observe players returning the next day and identify whether score, rivals, the larger Dune arena, or powers brought them back. | Not measured; arena and powers are future versions. |
 | Performance | 30 FPS or better with five snakes on the target mobile device, with readable steering and no repeated backward snap. | Network jitter tests exist; in world device measurement is pending. |
+| Dune XL | A larger arena still has readable boundaries, reachable food, fair spawns, and visible rivals on desktop and mobile. | Proposed for v1.1; requires a new parcel/layout and in world tests. |
+| Invincibility | The server grants one collected charge, applies and ends body collision protection at the same time for all players, and still kills at the fence. | Proposed for v1.2; not implemented. |
 
 Implementation references: `src/multiplayer-server.ts`, `src/netcode.ts`, and `src/combat.ts` define authoritative rules; `src/snake-game.ts` and `src/ui.tsx` define presentation and controls; `scene.json` and `assets/scene/main.composite` define the World and static scene. `README.md` provides player instructions. `design/decisions.md` and `design/01-find-the-fun/` retain the earlier rationale and test history.
 
