@@ -1,154 +1,223 @@
 # Snake Cluster — Game Design Document
 
-**Version:** 1.0
+**Decentraland Creator Success Program format**
 
-**Date:** 2026-10-28
+**Updated:** 2026-10-28
 
-**Platform:** Decentraland SDK7 World, desktop and mobile
+**Status:** Playable SDK7 project; the four week plan below is proposed work
 
-**World configuration:** `bibi.dcl.eth`
-**Status:** Current game specification, based on the implemented project
+| | Snake Cluster |
+| --- | --- |
+| Public experience title | Snake Cluster. Title clearance has not been documented; the game's custom art and third party asset licenses should be checked before a program submission. |
+| Deployment target | Decentraland World `bibi.dcl.eth`, as configured in `scene.json`. A public deployment was not verified for this document. |
+| Creator / team | BIBI is named in the scene metadata; repository owner: [biancamontesanti](https://github.com/biancamontesanti/SnakeCluster). Team size and public contact are not recorded in the project. |
+| Source | [SnakeCluster repository](https://github.com/biancamontesanti/SnakeCluster) |
+| Platform | Desktop and mobile Decentraland, in a four parcel World scene |
 
-## 1. Vision
+---
 
-Snake Cluster turns a Decentraland visit into an immediate, shared competition. Players steer colorful snakes through a compact sand arena, collect energy, spend length for speed, outmaneuver rivals, and chase the crown. The game gives strangers and friends a reason to stay together, react to one another, and replay without a host or scheduled event.
+## 0. TL;DR
 
-The promise is simple: **grow, survive, rule**. A new player should understand the goal within 30 seconds, reach the first food quickly, and be able to start another run immediately after losing.
+| | |
+| --- | --- |
+| **Player promise** | Become a colorful snake, eat energy to grow, spend length to boost, and outmaneuver other players for the crown. |
+| **Primary player** | A Decentraland visitor who wants a quick, readable multiplayer game with friends or strangers, including on a phone. |
+| **Current status** | Playable scene with authoritative movement, food, collisions, death drops, cosmetics, a crown, and scoreboards. Automated checks exist; public player count and mobile performance have not been verified here. |
+| **Next release goal** | Make the first minutes and cross platform controls consistently clear, prove multiplayer performance, and add a concrete next day return reason without changing the fair core rules. |
+| **Live outcome after proposed four weeks** | A reliable always open arena with a tested mobile experience, durable cosmetic progress, and one daily challenge that gives returning players a fresh target. These are goals, not current features. |
+
+---
+
+## 1. Player Promise
+
+**One line.** Grow a snake, survive the arena, and steal the crown from the longest living rival.
+
+**Familiar comparison.** The immediate collect and grow readability of classic Snake, with a shared live arena where another player's body becomes both danger and opportunity. Snake Cluster adds Decentraland presence, visible identity, a boost that spends length, and a crown that changes hands during play.
+
+**Why this game belongs in Decentraland.** A World can look attractive but still give visitors no reason to interact. Snake Cluster creates a shared activity that works with one person and becomes more dramatic when friends or strangers join. It needs no host, lobby, or scheduled round.
 
 ### Design pillars
 
-1. **Readable, fair danger.** The visible arena edge and snake bodies explain every death. The server decides collisions and rewards.
-2. **Instant social rivalry.** Players join a live match, see one another, and compete for a crown that can change hands at any time.
-3. **Expressive movement.** Continuous forward motion, deliberate steering, a costly boost, and a smooth chase camera make each run feel skillful.
-4. **Short path to replay.** A loading aware Play button, quick tutorial, immediate death feedback, and Play Again keep downtime low.
-5. **Personal identity.** Skins, hats, names, and all time best scores give players reasons to return beyond a single run.
+1. **Readable danger:** the fence and bodies explain death; server decisions are consistent for everyone.
+2. **Quick rivalry:** each life begins quickly, the crown is visible, and death feeds new contests over fallen energy.
+3. **Expressive control:** steering, timing, and costly boosts create decisions beyond simply collecting food.
+4. **Low friction:** desktop and touch can complete the same loop; loading and retries are clearly communicated.
 
-## 2. Audience and experience
+---
 
-The primary audience is Decentraland visitors who want a quick multiplayer activity with friends or nearby strangers. The game supports both a first time visitor playing for a few minutes and a repeat player trying to lead the arena or improve a personal best. It is drop in and drop out: a match has no global countdown or forced end, and each snake has its own run.
+## 2. First Minutes & How to Play
 
-The intended emotional arc is curiosity → first pickup → visible growth → risk taking → confrontation → dramatic death or crown moment → immediate retry.
+The times below are **experience targets**, not measured player results. The arena is already a live Decentraland scene when a visitor arrives; Play starts the visitor's snake run.
 
-## 3. Core loop
-
-1. Enter the World, read How to Play if needed, and choose an available skin or owned hat.
-2. Wait for the match and its food to load; press **Play**.
-3. Steer a snake that moves forward continuously. Collect energy to grow.
-4. Decide when to spend length on boost to escape, intercept, or contest food.
-5. Avoid the arena fence and every snake body. Try to make rivals collide with a body.
-6. On death, leave collectible energy behind. Review the result and press **Play Again**.
-
-There is no final victory screen. The active goal is to become the longest living snake and hold the crown; the longer term goal is a higher best score and more cosmetics.
-
-## 4. Arena and camera
-
-The scene occupies four Decentraland parcels in a 2×2 layout, approximately 32×32 meters. Snakes move on a horizontal plane over a sand floor. A custom `fence.glb` marks the arena edge. Its collision is enabled for the world, while the multiplayer server applies the lethal snake boundary. The playable snake head center is bounded by coordinates **1.25 to 30.75** on both horizontal axes.
-
-The camera is an elevated, smoothed chase view that follows the local snake and keeps forward movement legible. The normal Decentraland avatar is hidden during snake play so it does not obscure the arena. Leaving snake mode restores the avatar and normal camera in the public strip beside the arena; walking back into the arena reopens the game menu.
-
-## 5. Rules and systems
-
-### Movement and controls
-
-- The snake always moves forward while a run is active; players steer its heading.
-- Desktop: hold **left click and drag** to turn, or use **A/D** or **left/right arrows**. Hold **F**, **W**, or **Shift** to boost.
-- Mobile: steer with the left joystick and hold the on screen boost control.
-- The server integrates steering, movement, speed, and boost cost. Clients send input intent, not positions.
-- Base cruise speed is **3.04 m/s**. Boost targets **1.72×** cruise speed before turn speed reduction and smooth acceleration. Strong turns reduce speed to keep corners controllable.
-- Mouse steering depends on horizontal drag while left click is held. Incidental pointer movement does not steer.
-
-### Food, growth, and boost
-
-- The server starts and maintains **60** shared normal food items, spread randomly with spacing checks. Consumed normal food moves to another open position.
-- Normal food is safe. Each standard item adds one energy and one unit of logical snake length.
-- A run begins with **9** length units. The playable minimum is **5**.
-- Boost spends one length unit about every **0.55 seconds** while held. Boost stops being available at the minimum length.
-- The body visibly grows and shrinks with earned and spent length. Rendering uses a capped entity pool so very long snakes do not exceed scene limits; score logic still uses logical length.
-
-### Collisions and death
-
-- Crossing the arena fence limit, touching your own body, or touching a rival's body ends the run.
-- The server tests head travel against body segments between simulation samples, preventing a fast snake from passing through a body unnoticed.
-- A **1.75 second** spawn shield prevents unfair immediate body contact deaths; the arena boundary remains lethal.
-- Death is a server decision. Client death messages cannot terminate a life or create authoritative remains.
-- A dead snake leaves colored energy along its trail. These drops can be eaten by any living snake and expire after **45 seconds**. Their amount is based on the defeated snake's length, with a capped number of pieces.
-- A death screen identifies the cause and offers an immediate retry.
-
-### Competition and scoring
-
-- The **crown** belongs to the longest currently living snake. It moves when leadership changes and does not use kill count to choose its wearer.
-- The current match leaderboard ranks players by score. The server's score is current living length plus **10 points per kill** for a started run.
-- The all time board shows each player's best score, kept by the authoritative server's persistent storage and ordered highest first.
-- Rival kills are credited by the server when a snake hits another snake's body. Simultaneous contacts are resolved from the same simulation tick.
-
-### Cosmetics and collection
-
-- Five color skins are available immediately: **Violet, Aqua, Lime, Solar, and Rose**.
-- Three special skins unlock from cumulative collected energy: **Royal at 75**, **Inferno at 200**, and **Diamond at 500**.
-- Four hats are available through chests: **Pirate, Santa, Sombrero, and Witch**. A chest favors an unowned hat when one remains; owned hats can be equipped from the collection menu.
-- The first chest becomes eligible after roughly **75–165 seconds** of active play. Later chests use a **180–360 second** interval. Chests are cosmetic rewards, not competitive power-ups.
-- Cosmetic choices change the snake's appearance, not its speed, hit area, or score rules.
-- Skin energy and hat ownership are current client session progression; the persistent server record is the all time best score. The design does not promise cross session cosmetic persistence.
-
-## 6. Player flow and interface
-
-| State | Player sees | Exit condition |
-| --- | --- | --- |
-| Arrival / ready | Arena, logo, Play, Skins, How to Play, Leave Game, sound settings | Player selects Play after readiness completes |
-| Loading | Disabled Play with match or food loading text | Server is ready, match loading clears, and all 60 normal food entities are synced |
-| Running | Snake and chase camera, length and boost status, match/all time leaderboard | Server confirms a collision or player leaves |
-| Game over | Death reason and Play Again | Player starts another run, opens collection/tutorial, or leaves |
-| Exited | Normal avatar and camera outside the arena | Player reenters the arena and returns to the menu |
-
-**How to Play** explains steering, eating and growth, the 45 second death drops, boost cost, and collision danger. Desktop and mobile copy uses the appropriate controls. The loading gate applies to Play, Play Again, and the tutorial's final Play action, so a run does not begin before food and match state are available.
-
-The interface should remain readable at desktop and mobile sizes. Important actions use both visual and sound feedback. Music and effects have separate toggles; menu interactions use the Decentraland UI click sound. Eating, death, rival death, and background music have distinct cues.
-
-The core rules must remain understandable with sound off: the HUD shows length and boost availability, the death screen states the collision reason, and the tutorial spells out controls and boost cost. Color is paired with position, shape, labels, or motion wherever it signals a gameplay state. Mobile actions need touch sized targets and layouts that avoid covering the snake's immediate path.
-
-## 7. Multiplayer and fairness
-
-The authoritative server owns the match epoch, food positions and pickups, movement integration, boost spending, snake trails, collision results, death drops, kill awards, and score records. Clients can request movement and food claims; the server validates the sender, run, item revision, and proximity. Old packets and claims cannot revive a dead run or award the same pickup twice.
-
-The server simulates combat at roughly **30 Hz** and sends movement frames at roughly **20 Hz**. Clients buffer confirmed poses, interpolate between them, and use a visual follower and camera smoothing for presentation. Rendering may briefly lag the newest server pose; this is a deliberate visual tradeoff for stability. Presentation never creates a new authoritative movement or collision result. Retained snapshots and synced entities let late joiners see active snakes, food, and ranking state.
-
-Connection loss or a sleeping server is communicated through loading/waking text. Play remains unavailable until server status and the full food set are ready. Existing gameplay authority is not relaxed to hide network delay.
-
-## 8. Visual and audio direction
-
-The arena uses warm sand against the surrounding red landscape and a clear custom fence silhouette. Snakes use bright, contrasting colors, compact overlapping body segments, embedded eyes, and expressive headwear. Energy items are small colorful gems; fallen energy reflects the defeated snake's skin colors. The crown is an unmistakable, temporary status symbol.
-
-The scene should read at a glance from outside the parcel. During play, the head, body path, food, fence, crown, and other snakes are the primary visual hierarchy. Sound reinforces pickups, menu selections, defeat, and rival defeat without being required to understand the rules.
-
-## 9. Success criteria and validation
-
-The game is successful when new players can begin and understand the survival objective within 30 seconds, steer intentionally on desktop and mobile, see why they died, and choose to replay. The following checks turn that intent into observable tests:
-
-| Area | Acceptance check |
+| Time after control | Intended player experience |
 | --- | --- |
-| Onboarding | A new tester can start, collect food, identify boost cost, and explain wall/body danger after using How to Play. |
-| Controls | A tester completes a controlled 60 second run and intentionally boosts at least once on both desktop and mobile. |
-| Replay | In a five minute feel test, the creator voluntarily starts at least three runs. This is a design hypothesis, not a claimed measured result. |
-| Fairness | A server confirmed wall, self, or rival collision ends exactly one life; forged client positions or deaths do not decide outcomes. |
-| Sync | Normal food and late joined snakes appear from retained state; Play is gated until the match and 60 food items are loaded. |
-| Remains | Fallen energy can be collected and expires at 45 seconds, including while players are in menus. |
-| Presentation | Common packet jitter does not visibly snap the head backward; camera follows the displayed snake. |
-| Performance | The arena remains usable at 30 FPS or better on target desktop and mobile devices with several simultaneous snakes. This requires in world device testing. |
+| **0–5 seconds** | See the sand arena, custom fence, colorful food, Snake Cluster logo, and a clear Play action. |
+| **5–15 seconds** | Choose a skin or open How to Play. If the server or food is still syncing, Play displays loading text and stays unavailable. |
+| **15–60 seconds** | Start moving automatically, steer toward the first energy item, hear and see the pickup, and notice length increase in the HUD. |
+| **1–3 minutes** | Try boost, see that it spends length, avoid the fence and bodies, and spot the current crown holder on the match board. |
+| **3–10 minutes** | Contest a rival's path, collect fallen energy after a death, improve a score, or lose and press Play Again. |
+| **Natural stopping point** | After a death, compare the best score and leave the arena through Leave Game. A live rival or personal best gives a reason to return. |
 
-Automated regression scripts cover authoritative movement and food, collision/death ordering, network jitter, UI layout, and the 45 second remains lifetime. `npm run build` type checks and bundles the SDK7 scene. The historical prototype notes in `design/01-find-the-fun/` contain partial smoke and owner feedback; their uncompleted feel tests are not represented as passed here.
+**Player facing How to Play:**
 
-## 10. Scope and production boundaries
+- Steer: hold left click and drag, or use A/D or arrows; on mobile use the left joystick.
+- Eat the colorful energy to grow. Fallen energy lasts 45 seconds.
+- Hold F, W, or Shift to boost on desktop; use the touch boost control on mobile. Boost spends length.
+- Keep your head clear of the fence and all snake bodies, including your own. Cut in front of rivals to defeat them.
 
-The current product is one persistent arena with individual lives, a live crown, scoreboards, cosmetic choice, chests, audio settings, and desktop/mobile controls. It has no round timer, global match winner, purchasable advantage, or required wallet transaction. It is designed to work with one player and become more interesting as more players join.
+---
 
-Future work should be judged against the five design pillars. Improvements to input feel, mobile readability, in world performance, social discoverability, and progression persistence are valid directions, but they are not part of the rules specified above until implemented and tested.
+## 3. Core Loop and Rules
 
-## 11. Source of truth
+| # | Verb | Input → feedback → change | Why repeat? |
+| --- | --- | --- | --- |
+| 1 | **Steer** | Drag, press a turn key, or use the joystick → the snake and chase camera turn → a new route opens. | Every food layout and rival path asks for a different line. |
+| 2 | **Eat** | Cross a food item → pickup cue and visible growth → length and score rise. | More length brings score, safety margin, and boost fuel. |
+| 3 | **Boost** | Hold boost → faster movement and active HUD state → length is spent over time. | Spend length to escape, intercept, or reach valuable fallen food. |
+| 4 | **Outmaneuver** | Put a body in a rival's path → server confirmed death and remains → a contested energy trail appears. | Opponents create new tactical situations and can change the crown holder. |
+| 5 | **Retry** | Die → reason and Play Again appear → a new life starts when the arena is ready. | Try a better line, pursue the crown, and raise the best score. |
 
-- `src/multiplayer-server.ts`, `src/netcode.ts`, and `src/combat.ts`: authoritative movement, food, scoring, and collision rules.
-- `src/snake-game.ts` and `src/ui.tsx`: client presentation, controls, cosmetics, audio, and menus.
-- `assets/scene/main.composite` and `scene.json`: Creator Hub scene content and World configuration.
-- `README.md`: player facing overview and local run instructions.
-- `design/decisions.md` and `design/01-find-the-fun/`: design rationale and prototype validation history.
+**Loop length:** A pickup and routing decision can happen within seconds. A life has no fixed duration; a satisfying short visit is one or two lives in roughly five minutes. A longer visit can be repeated runs against live rivals. These visit lengths are design targets to verify in playtests.
 
-When implementation and this document differ, update the GDD alongside the rule change so players, designers, and developers share one current specification.
+**Meaningful decision:** Grow safely, or spend length to race and intercept. Since the snake never stops moving, a decision about route and timing is always active.
+
+### Implemented rule sheet
+
+| Rule | Current implementation |
+| --- | --- |
+| Arena | Four parcels, about 32×32 m. The lethal snake head boundary is x/z 1.25–30.75. The custom `fence.glb` marks that edge. |
+| Food | The server creates 60 spaced, randomly placed normal items; consumed items respawn. Standard food adds one energy and one length. |
+| Starting length | 9; minimum playable length is 5. |
+| Boost | Cruise speed is 3.04 m/s; boost targets 1.72× before turn slowdown. It spends one length about every 0.55 seconds and stops at minimum length. |
+| Body contact | Server checks head movement across the space between ticks against own and rival body segments. A 1.75 second spawn shield covers body contact, not the fence. |
+| Death remains | Server spawned, snake colored food; collectible by anyone for 45 seconds. |
+| Crown | Worn by the longest currently living snake; kill score does not choose the crown holder. |
+| Match score | Current living length + 10 points per kill for a started run. |
+| All time score | Best score per player is stored by the authoritative server. |
+
+The server owns movement, boost cost, food, pickups, collision results, deaths, kill credit, and records. Clients send control intent and render confirmed poses smoothly. A client cannot teleport its snake, award food, or decide its own death. The visual interpolation can trail the latest server pose slightly to avoid snap back under ordinary packet jitter.
+
+---
+
+## 4. Why Players Come Back
+
+### 4.1 The next day sentence
+
+> Today, a player who enjoyed Snake Cluster can return to beat a durable personal best or reclaim the crown from whoever is online. The project has **no daily reset, streak, or reminder yet**. The proposed next release adds one rotating daily challenge so the next day's goal is explicit.
+
+### 4.2 Progression chain
+
+**Repeatable action → reward → visible status → new decision:** collect food and survive → raise a server stored best score → appear on the all time board → decide whether to protect a long life or risk it to pass a rival.
+
+| Moment | What carries forward now? | What changes for the player? | What can others see? |
+| --- | --- | --- | --- |
+| **End of first life** | Personal best score is saved by the server. Energy earned during this client session also counts toward special skin thresholds. | Retry with a higher target and choose another unlocked skin. | Current score, name, skin, and crown position in the live match. |
+| **End of first visit** | Best score persists. Special skin progress and hats are **session local today**; they should not be described as durable rewards. | The player can return to beat the stored score. | Their best score on the all time board. |
+| **Proposed next release** | Add server stored cosmetic unlocks and one daily challenge completion record. | A returning player can pursue a new target while still competing under equal gameplay rules. | An earned cosmetic and challenge completion marker, if implemented. |
+
+Current cosmetics: Violet, Aqua, Lime, Solar, and Rose are available immediately. Royal unlocks at 75 cumulative session energy, Inferno at 200, and Diamond at 500. A chest favors an unowned Pirate, Santa, Sombrero, or Witch hat. The first chest is eligible after about 75–165 seconds of active play; later chests use a 180–360 second interval. Cosmetics provide expression, not a speed or hit area advantage. There is no currency or tradable reward.
+
+### 4.3 Two return hooks
+
+| Hook | Trigger | Anticipation | Reminder and fallback | Status |
+| --- | --- | --- | --- | --- |
+| **Personal best and crown rivalry** | Available whenever the World is open and another run can begin. | Beat yesterday's score or take the live crown. | The all time board and current leader are visible in game; no external reminder exists. | Implemented. |
+| **Daily Crown Challenge** | Proposed: one server selected objective rotates at 00:00 UTC, such as collect 20 energy in one life, survive 3 minutes, or earn one rival kill. | A named objective changes the next visit without changing the arena or giving a power advantage. | Proposed challenge card in the entry and death menus; if no social reminder is posted, the card still appears on arrival. | Planned for the next release; not implemented. |
+
+The challenge must use server confirmed events and be equally available to a solo player when its objective permits it. Rival kill objectives should be skipped during quiet hours or selected only when enough players are present. No streak punishment is proposed. A missed day simply brings a new objective.
+
+---
+
+## 5. Social by Design
+
+| Question | Snake Cluster answer |
+| --- | --- |
+| **Repeatable social loop** | Player A grows and takes the crown → Player B boosts to intercept → one hits a body → both see the death and the field of fallen energy → nearby players race to collect it → the crown and rankings can change. |
+| **Disappearance test** | Without other players, collection, survival, cosmetics, and personal bests still work. Body traps, kill credit, contested remains, and the thrill of taking the crown from a person disappear. |
+| **Strangers into a group** | The shared food field and visible crown give strangers a common objective without joining a party or typing. Names above snakes and match rankings make encounters recognizable. |
+| **Recognition** | Skin, hat, name, crown, and leaderboard identify rivals. Only best scores persist today; cross visit rival history is not implemented. |
+| **Quiet hours and scale** | One player can play immediately. Two or more create direct rivalry. A 5 player playtest is the next practical social and performance threshold; a maximum safe population is not yet measured. |
+| **Drop in / drop out** | Players enter individual lives at any time. A late arrival sees retained snakes and food. Leaving ends that player's participation without stopping the arena. |
+| **Bystander test** | From outside the fence, a visitor sees colorful snakes weaving between food and a crown moving with the leader. |
+| **Shareable moment** | A small snake boosts across a larger rival's path; the rival crashes, its body becomes food, and the crown changes heads. |
+| **Bring a friend** | A friend can enter the same World, recognize your snake by name and color, and challenge you immediately rather than wait for a round start. |
+
+---
+
+## 6. Mobile First
+
+| Core verb | Touch implementation |
+| --- | --- |
+| Steer | Left joystick turns the snake while it continues forward. |
+| Eat | Move the head through food; no separate tap is needed. |
+| Boost | Hold the on screen boost control. |
+| Compete | Use the same movement, collision, crown, and food rules as desktop. |
+| Retry | Tap Play Again after the server confirms death and the match is ready. |
+
+**UI plan.** Keep the snake and the path immediately ahead visible. Use a compact length/boost HUD, a separate match/all time leaderboard, large touch actions, and short tutorial copy. The Play button explains server and food loading rather than accepting an early start. Music and sound effects can be toggled independently. Core rules remain understandable with sound off because length, boost state, and death reason are visible.
+
+**Desktop controls.** Hold left click and drag, or A/D or left/right arrows to steer. Hold F, W, or Shift to boost. The SDK's portable secondary action is used where available; a distinct right click promise is not made because it is not a reliable cross platform input in the current implementation.
+
+**Performance target.** At least 30 FPS on a representative mid range mobile device with five visible snakes, with readable controls and no repeated backward snap. Desktop and mobile device measurements at this population are pending. The renderer caps local and remote body entities; the game still uses logical length for rules and score.
+
+---
+
+## 7. World, Look & Audio
+
+**World.** Snake Cluster is an always open sand arena inside a four parcel Decentraland World. The fence gives the space a clear boundary; the surrounding red landscape frames the play area. The ordinary avatar is hidden during snake play, then restored when the player leaves game mode.
+
+**Visual direction.** Bright snakes and small colorful energy items contrast against warm sand. Compact overlapping segments read as one body; embedded eyes keep the head expressive. Fallen energy inherits the defeated snake's colors. The moving crown makes leadership visible without opening a board. Signature shot: several snakes crossing the sand, one crowned, with fresh energy scattered where a rival fell.
+
+**Audio.** Music, pickup, death, enemy death, and menu feedback are distinct. Menu buttons use the Decentraland UI click sound. Music and effects have separate toggles. Audio confirms actions but does not carry exclusive gameplay information.
+
+---
+
+## 8. Audience & Comparables
+
+**Primary player and arrival.** A Decentraland visitor arriving from the World directory, a friend link, or an in world encounter, looking for a five minute game that can expand into a longer rivalry. The first acquisition channel is the existing World and shareable repository/community presence; no event schedule or marketing campaign is recorded as already running.
+
+**Deliberately not for.** Players seeking a long scripted quest, a tradable reward economy, or a turn based game. Snake Cluster is continuous movement and repeatable spatial competition.
+
+| | Classic Snake | Shared arena snake games such as Slither.io | Snake Cluster choice |
+| --- | --- | --- | --- |
+| Useful reference | Simple rule: collect and grow while avoiding your body. | Other players turn movement and body placement into live competition. | Preserve instant readability and add Decentraland identity and presence. |
+| Poor fit to copy | A fixed grid and solitary play would underuse a shared 3D World. | Browser specific input and scale do not map directly to Decentraland mobile or scene budgets. | Keep a compact four parcel arena, one clear camera, and server owned fairness. |
+| Distinctive choice | — | — | Boost consumes length; the living length crown and 45 second remains make each death a new social contest. |
+
+The table is a design comparison, not a claim of user research or performance data about those games.
+
+---
+
+## 9. Proposed Four Week Plan
+
+The current playable game already contains the core loop. This is a **next release plan**, not a claim that these features or tests are complete.
+
+| Week | Playable outcome and evidence |
+| --- | --- |
+| **1 — Baseline** | Run an unprompted first minute test with at least three new visitors; record time to Play, first pickup, first boost, first death, and whether the death cause is understood. Reproduce current desktop and mobile build checks. |
+| **2 — Fairness and social test** | Test at one, two, and five simultaneous players. Verify crown handoff, simultaneous collisions, 45 second remains, late join visibility, server recovery, and no duplicate kill awards. Fix any observed rule mismatch. |
+| **3 — Durable return hook** | Store cosmetic unlocks and daily challenge completion on the server, add the daily challenge card, and test the UTC rotation and solo eligible objective selection. Do not add competitive stat bonuses. |
+| **4 — Mobile and release pass** | Test touch controls and HUD on a representative mid range phone with five snakes; reach the 30 FPS target, run a public World smoke test, document final controls, and verify that the first minute and replay tests pass. |
+
+**What keeps it changing after launch.** Live opponents and changing food/remains already create variation. A server selected daily objective would add a named next day reason without a new map. If the daily feature slips, the existing score and crown loop remains playable; the GDD and UI must not claim a daily challenge until it ships.
+
+**What is outside this release.** A second arena, paid power upgrades, tradable rewards, global round timers, and a complex quest system. Cosmetics remain visual only.
+
+**Top risk and fallback.** The biggest product risk is that high latency or crowded scenes make snake steering and collisions feel unfair even when the server is correct. First measure five player desktop/mobile sessions and inspect confirmed pose presentation. If a device cannot meet the target, reduce visual entity load and adjust presentation buffering while preserving server decisions; do not give clients authority over movement or death.
+
+---
+
+## 10. Validation and Source of Truth
+
+| Claim to prove | Pass condition | Current evidence |
+| --- | --- | --- |
+| First minute clarity | New tester starts, collects food, understands boost cost and death cause without an oral explanation. | How to Play and loading UI exist; an unprompted study has not been recorded. |
+| Cross platform control | One controlled 60 second run with an intentional boost on desktop **and** mobile. | Desktop mechanical smoke is documented in `design/01-find-the-fun/`; creator feel pass and mobile pass remain unreported. |
+| Replay appeal | At least three voluntarily started runs in a five minute creator test. | Earlier prototype hypothesis was deferred; no result should be claimed. |
+| Multiplayer fairness | Server confirmed wall, self, and rival contacts end exactly one life; false client death/position reports do not decide outcomes. | Automated server and gameplay regression checks cover these cases. |
+| Return appeal | Observe players returning the next day and identify whether score, rivals, or the proposed daily objective brought them back. | Not measured. |
+| Performance | 30 FPS or better with five snakes on the target mobile device, with readable steering and no repeated backward snap. | Network jitter tests exist; in world device measurement is pending. |
+
+Implementation references: `src/multiplayer-server.ts`, `src/netcode.ts`, and `src/combat.ts` define authoritative rules; `src/snake-game.ts` and `src/ui.tsx` define presentation and controls; `scene.json` and `assets/scene/main.composite` define the World and static scene. `README.md` provides player instructions. `design/decisions.md` and `design/01-find-the-fun/` retain the earlier rationale and test history.
+
+When a rule changes in code, update this document and the player facing How to Play copy together.
