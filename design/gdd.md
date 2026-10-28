@@ -4,7 +4,7 @@
 
 **Updated:** 2026-10-28
 
-**Status:** Playable SDK7 project; the four week plan below is proposed work
+**Status:** Playable SDK7 Classic mode; the expansion below is proposed work
 
 | | Snake Cluster |
 | --- | --- |
@@ -23,8 +23,8 @@
 | **Player promise** | Become a colorful snake, eat energy to grow, spend length to boost, and outmaneuver other players for the crown. |
 | **Primary player** | A Decentraland visitor who wants a quick, readable multiplayer game with friends or strangers, including on a phone. |
 | **Current status** | Playable scene with authoritative movement, food, collisions, death drops, cosmetics, a crown, and scoreboards. Automated checks exist; public player count and mobile performance have not been verified here. |
-| **Next release goal** | Make the first minutes and cross platform controls consistently clear, prove multiplayer performance, and add a concrete next day return reason without changing the fair core rules. |
-| **Live outcome after proposed four weeks** | A reliable always open arena with a tested mobile experience, durable cosmetic progress, and one daily challenge that gives returning players a fresh target. These are goals, not current features. |
+| **Next release goal** | Give the existing arena a stronger 3D look, add permanent rank badges, and prototype one fair tactical weapon while preserving the current Classic rules. |
+| **Live outcome after proposed four weeks** | A tested visual upgrade and persistent badges in Classic, plus a separately selectable Arsenal prototype with one weapon. A second themed world and larger arsenal follow only after that prototype proves readable and performant. These are goals, not current features. |
 
 ---
 
@@ -32,7 +32,7 @@
 
 **One line.** Grow a snake, survive the arena, and steal the crown from the longest living rival.
 
-**Familiar comparison.** The immediate collect and grow readability of classic Snake, with a shared live arena where another player's body becomes both danger and opportunity. Snake Cluster adds Decentraland presence, visible identity, a boost that spends length, and a crown that changes hands during play.
+**Familiar comparison.** The immediate collect and grow readability of classic Snake, with a shared live arena where another player's body becomes both danger and opportunity. The future Arsenal mode adds playful, tactical weapons inspired by Worms, adapted to Snake Cluster's continuous movement rather than a turn based round.
 
 **Why this game belongs in Decentraland.** A World can look attractive but still give visitors no reason to interact. Snake Cluster creates a shared activity that works with one person and becomes more dramatic when friends or strangers join. It needs no host, lobby, or scheduled round.
 
@@ -42,6 +42,7 @@
 2. **Quick rivalry:** each life begins quickly, the crown is visible, and death feeds new contests over fallen energy.
 3. **Expressive control:** steering, timing, and costly boosts create decisions beyond simply collecting food.
 4. **Low friction:** desktop and touch can complete the same loop; loading and retries are clearly communicated.
+5. **More depth without losing clarity:** lighting, terrain, props, animation, and camera work make the arena feel three dimensional while the movement plane and lethal boundaries stay legible.
 
 ---
 
@@ -103,7 +104,7 @@ The server owns movement, boost cost, food, pickups, collision results, deaths, 
 
 ### 4.1 The next day sentence
 
-> Today, a player who enjoyed Snake Cluster can return to beat a durable personal best or reclaim the crown from whoever is online. The project has **no daily reset, streak, or reminder yet**. The proposed next release adds one rotating daily challenge so the next day's goal is explicit.
+> Today, a player who enjoyed Snake Cluster can return to beat a durable personal best or reclaim the crown from whoever is online. The proposed next release turns verified score milestones into permanent rank badges, giving the player a visible target that remains earned after a bad run. There is no daily reset, streak, or reminder in the current game.
 
 ### 4.2 Progression chain
 
@@ -113,7 +114,7 @@ The server owns movement, boost cost, food, pickups, collision results, deaths, 
 | --- | --- | --- | --- |
 | **End of first life** | Personal best score is saved by the server. Energy earned during this client session also counts toward special skin thresholds. | Retry with a higher target and choose another unlocked skin. | Current score, name, skin, and crown position in the live match. |
 | **End of first visit** | Best score persists. Special skin progress and hats are **session local today**; they should not be described as durable rewards. | The player can return to beat the stored score. | Their best score on the all time board. |
-| **Proposed next release** | Add server stored cosmetic unlocks and one daily challenge completion record. | A returning player can pursue a new target while still competing under equal gameplay rules. | An earned cosmetic and challenge completion marker, if implemented. |
+| **Proposed next release** | Add server stored rank badges and cosmetic ownership. | A returning player can pursue the next badge and express that progress in the current World. | A small badge beside the name and on the leaderboard, plus earned cosmetics. |
 
 Current cosmetics: Violet, Aqua, Lime, Solar, and Rose are available immediately. Royal unlocks at 75 cumulative session energy, Inferno at 200, and Diamond at 500. A chest favors an unowned Pirate, Santa, Sombrero, or Witch hat. The first chest is eligible after about 75–165 seconds of active play; later chests use a 180–360 second interval. Cosmetics provide expression, not a speed or hit area advantage. There is no currency or tradable reward.
 
@@ -122,9 +123,11 @@ Current cosmetics: Violet, Aqua, Lime, Solar, and Rose are available immediately
 | Hook | Trigger | Anticipation | Reminder and fallback | Status |
 | --- | --- | --- | --- | --- |
 | **Personal best and crown rivalry** | Available whenever the World is open and another run can begin. | Beat yesterday's score or take the live crown. | The all time board and current leader are visible in game; no external reminder exists. | Implemented. |
-| **Daily Crown Challenge** | Proposed: one server selected objective rotates at 00:00 UTC, such as collect 20 energy in one life, survive 3 minutes, or earn one rival kill. | A named objective changes the next visit without changing the arena or giving a power advantage. | Proposed challenge card in the entry and death menus; if no social reminder is posted, the card still appears on arrival. | Planned for the next release; not implemented. |
+| **Permanent rank badges** | Proposed: a verified best score first crosses a fixed tier threshold. | The next badge remains attainable across visits, and an earned badge never disappears after a loss. | Next tier progress appears in the menu; earned badges appear beside the snake name and on the leaderboard. No external reminder is required. | Planned for the next release; not implemented. |
 
-The challenge must use server confirmed events and be equally available to a solo player when its objective permits it. Rival kill objectives should be skipped during quiet hours or selected only when enough players are present. No streak punishment is proposed. A missed day simply brings a new objective.
+**Proposed badge ladder:** Bronze at a best score of 25, Silver at 50, Gold at 100, and Diamond at 200. These are initial balance targets, to be adjusted from playtest score distributions before launch. A badge is granted once from a server verified best score, stored permanently for the current World, and never downgraded. The crown remains a temporary in match title; rank is a fixed, cross visit achievement. Badges give no speed, shield, weapon, or hit area advantage. Cross world rank sharing requires its own verified profile system.
+
+A rotating daily challenge remains a later retention option, not part of the immediate four week scope. Its objectives must use server confirmed events and include solo eligible choices during quiet hours.
 
 ---
 
@@ -164,9 +167,11 @@ The challenge must use server confirmed events and be equally available to a sol
 
 ## 7. World, Look & Audio
 
-**World.** Snake Cluster is an always open sand arena inside a four parcel Decentraland World. The fence gives the space a clear boundary; the surrounding red landscape frames the play area. The ordinary avatar is hidden during snake play, then restored when the player leaves game mode.
+**World.** Snake Cluster is an always open sand arena inside a four parcel Decentraland World. The fence gives the space a clear boundary; the surrounding red landscape frames the play area. The ordinary avatar is hidden during snake play, then restored when the player leaves game mode. This existing arena becomes the **Dune** theme if additional worlds are built.
 
 **Visual direction.** Bright snakes and small colorful energy items contrast against warm sand. Compact overlapping segments read as one body; embedded eyes keep the head expressive. Fallen energy inherits the defeated snake's colors. The moving crown makes leadership visible without opening a board. Signature shot: several snakes crossing the sand, one crowned, with fresh energy scattered where a rival fell.
+
+**Next visual pass.** Give the snake a more continuous, rounded 3D body, a head with greater volume and facial expression, grounded shadows, subtle body undulation, and clearer turns. Add layered arena props, material variation, and depth cues so the camera reads the world as a place rather than a flat board. Food, weapons, hazards, bodies, and the lethal fence need distinct silhouettes from the chase camera and on a phone. Art must match the server's collision shapes; decorative height must not imply a climbable route or a safe path through the fence.
 
 **Audio.** Music, pickup, death, enemy death, and menu feedback are distinct. Menu buttons use the Decentraland UI click sound. Music and effects have separate toggles. Audio confirms actions but does not carry exclusive gameplay information.
 
@@ -184,30 +189,78 @@ The challenge must use server confirmed events and be equally available to a sol
 | Poor fit to copy | A fixed grid and solitary play would underuse a shared 3D World. | Browser specific input and scale do not map directly to Decentraland mobile or scene budgets. | Keep a compact four parcel arena, one clear camera, and server owned fairness. |
 | Distinctive choice | — | — | Boost consumes length; the living length crown and 45 second remains make each death a new social contest. |
 
-The table is a design comparison, not a claim of user research or performance data about those games.
+The table is a design comparison, not a claim of user research or performance data about those games. The tactical weapon reference is Worms' playful variety and readable anticipation; Snake Cluster's Arsenal mode will use original weapon designs and retain real time snake movement.
 
 ---
 
-## 9. Proposed Four Week Plan
+## 9. Expansion Vision and Design Rules
 
-The current playable game already contains the core loop. This is a **next release plan**, not a claim that these features or tests are complete.
+These features are **proposed**, not implemented. Build them in layers so the existing quick, fair Snake Cluster loop remains a dependable baseline.
+
+### 9.1 Stronger 3D presentation
+
+The first pass changes how the game looks and feels, not its collision rules: a volumetric snake head, a continuous looking body, smoother animation, grounded shadows, richer sand and landscape materials, and a camera with more depth. Test the result from the actual play camera on desktop and mobile. A cosmetic model must never hide the head, food, weapon telegraph, or fence. Keep snake movement on the current horizontal plane until a separate vertical movement prototype proves it is readable and fair.
+
+**Acceptance:** Five snakes remain visually distinguishable; body and fence contacts look consistent with server deaths; the target mobile device holds at least 30 FPS; existing movement, collision, and network regression checks still pass.
+
+### 9.2 Classic and Arsenal modes
+
+**Classic** keeps today's rules: food, boost, lethal bodies and fence, crown, and current scoring. **Arsenal** is an optional, separate real time mode that adds tactical weapon pickups. A player chooses the mode before Play. Arsenal gets its own match leaderboard and best score so weapon use cannot distort Classic rankings. Weapons never appear in Classic.
+
+Arsenal borrows the *playful tactical choice* of Worms, not its turn structure or named weapons. Every weapon has a clear pickup, one action to use it, a visible warning or travel path, an effect resolved by the authoritative server, a short duration, and a counterplay window. A player may hold **one weapon charge** at a time. The first prototype is a **Front Rocket**: it fires along the snake's current heading, travels visibly, and on a confirmed hit removes a small fixed amount of rival length down to the normal minimum of five. It does not directly kill, change a rival's heading, destroy the arena fence, or bypass the body's normal lethal collision rule. Initial tuning target: a 1.5 second travel window and a cost of three length units on hit; tune after player tests.
+
+After the rocket is readable and fair, test a **Trail Mine** (placed behind the snake, delayed arming, visible marker, limited lifetime) and a **Shield** (absorbs one weapon hit, never a fence or body collision). Only add each to the live mode after testing its counterplay and mobile controls. Terrain destruction, explosive chain reactions, and knockback are later experiments because they can obscure the lethal boundary and add heavy sync cost.
+
+**Input rule:** one dedicated weapon action on desktop and one large touch button on mobile, separate from steering and boost. No aim menu should interrupt continuous movement. **Fairness rule:** the server owns pickup spawning, charge inventory, firing, projectile positions, hit results, and length changes; clients only request use and render effects. Weapon effects are earned in the arena, never purchased as competitive advantages.
+
+**Acceptance:** At least three new testers can identify the rocket's warning and effect without an oral explanation; a mobile player can steer, boost, and fire without losing control; simulated packet loss does not duplicate a weapon or hit; five player performance remains within the mobile target.
+
+### 9.3 More themed worlds
+
+Treat each world as a recognizable arena with the same movement, food, death, and authority rules. The current sand arena is **Dune**. Prototype one contrasting second arena, **Crystal Cavern**, with cool light, layered rock forms, glowing food, and the same clear lethal perimeter. A third **Verdant Ruins** theme can follow only if the second arena attracts repeat play. These are working art directions, not committed World names or deployments.
+
+The first new arena changes scenery and routes of attention, not snake physics or competitive rules. A later world may add one server owned environmental hazard if it is legible, avoidable, and tested on mobile. Whether arenas are separate Decentraland World deployments or linked scenes must be decided when available World names, navigation, and cross world profile storage are known. The GDD does not assume that a profile automatically transfers between deployments.
+
+**Acceptance:** A player can identify the arena and fence in two seconds, find food quickly, and understand a death in either theme. Performance and collision tests pass separately for each arena. If worlds are separate deployments, badge and cosmetic persistence must be verified across them before advertising a shared profile.
+
+### 9.4 More cosmetics and fixed rank badges
+
+Grow the collection through distinctive skins, eyes, hats, trails, and death effects. Each item needs a readable silhouette or effect at the chase camera distance, a clear unlock source, and no change to collision size, speed, food value, or weapon strength. Persist ownership on the server before expanding beyond the current session local hats and special skins. Do not use a cosmetic that looks like a live weapon warning or a crown.
+
+Rank badges are a separate, permanent status layer. The proposed Bronze / Silver / Gold / Diamond thresholds in Section 4 are earned from server verified best scores, remain fixed after a loss, and display beside player names and on leaderboards. The crown still changes with the longest living snake. In Arsenal, a separate badge track may be added later; Classic badges must not be earned from weapon assisted scores.
+
+### 9.5 Order of implementation
+
+| Stage | Deliverable | Gate before moving on |
+| --- | --- | --- |
+| **1 — 3D foundation** | New snake look, depth, lighting, camera tuning, and collision aligned visuals in Dune. | Mobile readability and 30 FPS at five snakes; no regression in movement or death. |
+| **2 — Identity** | Server stored cosmetic ownership and fixed Classic rank badges. | Earn, reconnect, and return after server restart without losing ownership or rank. |
+| **3 — Arsenal vertical slice** | Mode selection, separate scores, one Front Rocket, desktop/touch action, and server validation. | New player comprehension, counterplay, no duplicate hits, and five player performance. |
+| **4 — New world** | Crystal Cavern art and navigation prototype using proven rules. | Food, fence, camera, and profile behavior pass in both arenas. |
+| **5 — Content expansion** | Additional cosmetics, then Mine and Shield, then another world or a daily challenge based on retention evidence. | Each addition must improve repeat play without undermining clarity or fairness. |
+
+---
+
+## 10. Proposed Four Week Plan
+
+The current playable game already contains the Classic loop. This is the **first stage of the expansion**, not a promise that every world and weapon will ship in four weeks.
 
 | Week | Playable outcome and evidence |
 | --- | --- |
-| **1 — Baseline** | Run an unprompted first minute test with at least three new visitors; record time to Play, first pickup, first boost, first death, and whether the death cause is understood. Reproduce current desktop and mobile build checks. |
-| **2 — Fairness and social test** | Test at one, two, and five simultaneous players. Verify crown handoff, simultaneous collisions, 45 second remains, late join visibility, server recovery, and no duplicate kill awards. Fix any observed rule mismatch. |
-| **3 — Durable return hook** | Store cosmetic unlocks and daily challenge completion on the server, add the daily challenge card, and test the UTC rotation and solo eligible objective selection. Do not add competitive stat bonuses. |
-| **4 — Mobile and release pass** | Test touch controls and HUD on a representative mid range phone with five snakes; reach the 30 FPS target, run a public World smoke test, document final controls, and verify that the first minute and replay tests pass. |
+| **1 — Visual prototype and baseline** | Test a more volumetric snake and 3D environment depth in Dune. Record the current mobile frame rate, first minute comprehension, and collision readability with one, two, and five players. |
+| **2 — 3D pass and rank foundations** | Finish the first visual pass under scene limits. Add server stored best score badge awards with provisional fixed thresholds; verify reconnection and server restart persistence. |
+| **3 — Arsenal prototype** | Add an opt in mode and one Front Rocket with a single touch/keyboard action. Keep Classic untouched, separate its scores, and test server validation, telegraph timing, and counterplay. |
+| **4 — Playtest and release decision** | Run desktop and mobile five player tests. Ship the 3D pass and badges if they meet acceptance checks; keep Arsenal experimental until its controls, fairness, and performance pass. Define Crystal Cavern's art brief from what players found readable. |
 
-**What keeps it changing after launch.** Live opponents and changing food/remains already create variation. A server selected daily objective would add a named next day reason without a new map. If the daily feature slips, the existing score and crown loop remains playable; the GDD and UI must not claim a daily challenge until it ships.
+**What keeps it changing after launch.** Live opponents, food, and remains already vary each visit. Permanent ranks and cosmetics add longer goals; Arsenal adds new decisions; themed worlds refresh the setting. A daily challenge is a later option if retention testing shows that these reasons are not enough.
 
-**What is outside this release.** A second arena, paid power upgrades, tradable rewards, global round timers, and a complex quest system. Cosmetics remain visual only.
+**Outside this four week release:** a second fully shipped world, multiple live weapons, destructible terrain, paid power upgrades, tradable rewards, and global round timers. The new world and extra powers have named gates in Section 9 rather than being abandoned.
 
-**Top risk and fallback.** The biggest product risk is that high latency or crowded scenes make snake steering and collisions feel unfair even when the server is correct. First measure five player desktop/mobile sessions and inspect confirmed pose presentation. If a device cannot meet the target, reduce visual entity load and adjust presentation buffering while preserving server decisions; do not give clients authority over movement or death.
+**Top risk and fallback.** Extra art and weapon effects could make mobile play slower and collisions harder to read. Measure from the play camera at five players. If the target device cannot meet 30 FPS or new players misread danger, reduce props, particles, materials, and rendered body detail before changing authoritative rules. If the weapon prototype fails, ship the 3D and badge work while Classic remains the main game.
 
 ---
 
-## 10. Validation and Source of Truth
+## 11. Validation and Source of Truth
 
 | Claim to prove | Pass condition | Current evidence |
 | --- | --- | --- |
@@ -217,6 +270,10 @@ The current playable game already contains the core loop. This is a **next relea
 | Multiplayer fairness | Server confirmed wall, self, and rival contacts end exactly one life; false client death/position reports do not decide outcomes. | Automated server and gameplay regression checks cover these cases. |
 | Return appeal | Observe players returning the next day and identify whether score, rivals, or the proposed daily objective brought them back. | Not measured. |
 | Performance | 30 FPS or better with five snakes on the target mobile device, with readable steering and no repeated backward snap. | Network jitter tests exist; in world device measurement is pending. |
+| 3D upgrade | The new snake and arena read as three dimensional, but visible contacts still match the server's hit rules. | Proposed; compare play camera footage and collision outcomes in desktop/mobile tests. |
+| Rank badges | Server awards a fixed tier once, keeps it after death, reconnection, and restart, and never grants gameplay power. | Proposed; requires persistent profile tests. |
+| Arsenal | Front Rocket has one server confirmed charge and hit, visible counterplay, separate ranking, and usable mobile input. | Proposed; requires a multiplayer prototype and packet loss tests. |
+| New world | Crystal Cavern preserves food, fence, camera, performance, and profile rules. | Proposed; verify after the first world prototype. |
 
 Implementation references: `src/multiplayer-server.ts`, `src/netcode.ts`, and `src/combat.ts` define authoritative rules; `src/snake-game.ts` and `src/ui.tsx` define presentation and controls; `scene.json` and `assets/scene/main.composite` define the World and static scene. `README.md` provides player instructions. `design/decisions.md` and `design/01-find-the-fun/` retain the earlier rationale and test history.
 
