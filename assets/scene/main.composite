@@ -78,6 +78,153 @@
             },
             "parent": 0
           }
+        },
+        "514": {
+          "json": {
+            "position": {
+              "x": 0.25,
+              "y": 0,
+              "z": 2
+            },
+            "scale": {
+              "x": 1,
+              "y": 1,
+              "z": 1
+            },
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            },
+            "parent": 0
+          }
+        },
+        "516": {
+          "json": {
+            "position": {
+              "x": 0.75,
+              "y": 0,
+              "z": 15.25
+            },
+            "scale": {
+              "x": 1,
+              "y": 1,
+              "z": 1
+            },
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            },
+            "parent": 0
+          }
+        },
+        "517": {
+          "json": {
+            "position": {
+              "x": 0.5,
+              "y": 0,
+              "z": 15
+            },
+            "scale": {
+              "x": 1,
+              "y": 1,
+              "z": 1
+            },
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            },
+            "parent": 0
+          }
+        },
+        "519": {
+          "json": {
+            "position": {
+              "x": 0.5,
+              "y": 0,
+              "z": 15.75
+            },
+            "scale": {
+              "x": 1,
+              "y": 1,
+              "z": 1
+            },
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            },
+            "parent": 0
+          }
+        },
+        "520": {
+          "json": {
+            "position": {
+              "x": 3,
+              "y": 0,
+              "z": 30.75
+            },
+            "scale": {
+              "x": 1,
+              "y": 1,
+              "z": 1
+            },
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            },
+            "parent": 0
+          }
+        },
+        "66051": {
+          "json": {
+            "position": {
+              "x": 13,
+              "y": 0,
+              "z": 31.5
+            },
+            "scale": {
+              "x": 1,
+              "y": 1,
+              "z": 1
+            },
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            },
+            "parent": 0
+          }
+        },
+        "459270": {
+          "json": {
+            "position": {
+              "x": 1,
+              "y": 0,
+              "z": 10
+            },
+            "scale": {
+              "x": 1,
+              "y": 1,
+              "z": 1
+            },
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            },
+            "parent": 0
+          }
         }
       }
     },
@@ -93,8 +240,57 @@
         "513": {
           "json": {
             "src": "assets/Models/fence/fence.glb",
-            "visibleMeshesCollisionMask": 3,
-            "invisibleMeshesCollisionMask": 0
+            "visibleMeshesCollisionMask": 0,
+            "invisibleMeshesCollisionMask": 3
+          }
+        },
+        "514": {
+          "json": {
+            "src": "assets/asset-packs/java_fern/Grass_01/Grass_01.glb",
+            "visibleMeshesCollisionMask": 0,
+            "invisibleMeshesCollisionMask": 3
+          }
+        },
+        "516": {
+          "json": {
+            "src": "assets/asset-packs/grass_sprout/Grass_03/Grass_03.glb",
+            "visibleMeshesCollisionMask": 0,
+            "invisibleMeshesCollisionMask": 3
+          }
+        },
+        "517": {
+          "json": {
+            "src": "assets/asset-packs/ostrich_ferns/Grass_02/Grass_02.glb",
+            "visibleMeshesCollisionMask": 0,
+            "invisibleMeshesCollisionMask": 3
+          }
+        },
+        "519": {
+          "json": {
+            "src": "assets/asset-packs/rose/Flower_03/Flower_03.glb",
+            "visibleMeshesCollisionMask": 0,
+            "invisibleMeshesCollisionMask": 3
+          }
+        },
+        "520": {
+          "json": {
+            "src": "assets/asset-packs/light_green_sycamore_tree/TreeSycamore_01/TreeSycamore_01.glb",
+            "visibleMeshesCollisionMask": 0,
+            "invisibleMeshesCollisionMask": 3
+          }
+        },
+        "66051": {
+          "json": {
+            "src": "assets/asset-packs/flower_sprouts/Plant_03/Plant_03.glb",
+            "visibleMeshesCollisionMask": 0,
+            "invisibleMeshesCollisionMask": 3
+          }
+        },
+        "459270": {
+          "json": {
+            "src": "assets/asset-packs/cactus/Cactus_01/Cactus_01.glb",
+            "visibleMeshesCollisionMask": 0,
+            "invisibleMeshesCollisionMask": 3
           }
         }
       }
@@ -115,6 +311,41 @@
         "513": {
           "json": {
             "value": "fence.glb"
+          }
+        },
+        "514": {
+          "json": {
+            "value": "Java Fern"
+          }
+        },
+        "516": {
+          "json": {
+            "value": "Grass Sprout"
+          }
+        },
+        "517": {
+          "json": {
+            "value": "Ostrich Ferns"
+          }
+        },
+        "519": {
+          "json": {
+            "value": "Rose"
+          }
+        },
+        "520": {
+          "json": {
+            "value": "Light Green Sycamore Tree"
+          }
+        },
+        "66051": {
+          "json": {
+            "value": "Flower Sprouts"
+          }
+        },
+        "459270": {
+          "json": {
+            "value": "Cactus"
           }
         }
       }
@@ -194,7 +425,14 @@
                 "entity": 0,
                 "open": true,
                 "children": [
-                  513
+                  513,
+                  514,
+                  459270,
+                  516,
+                  517,
+                  519,
+                  66051,
+                  520
                 ]
               },
               {
@@ -207,6 +445,34 @@
               },
               {
                 "entity": 513,
+                "children": []
+              },
+              {
+                "entity": 514,
+                "children": []
+              },
+              {
+                "entity": 459270,
+                "children": []
+              },
+              {
+                "entity": 516,
+                "children": []
+              },
+              {
+                "entity": 517,
+                "children": []
+              },
+              {
+                "entity": 519,
+                "children": []
+              },
+              {
+                "entity": 66051,
+                "children": []
+              },
+              {
+                "entity": 520,
                 "children": []
               }
             ]
@@ -235,6 +501,27 @@
           "json": {
             "porportionalScaling": true
           }
+        },
+        "514": {
+          "json": {}
+        },
+        "516": {
+          "json": {}
+        },
+        "517": {
+          "json": {}
+        },
+        "519": {
+          "json": {}
+        },
+        "520": {
+          "json": {}
+        },
+        "66051": {
+          "json": {}
+        },
+        "459270": {
+          "json": {}
         }
       }
     },
@@ -594,24 +881,24 @@
             "layout": {
               "parcels": [
                 {
-                  "x": -4,
+                  "x": 0,
                   "y": 0
                 },
                 {
-                  "x": -4,
+                  "x": 0,
                   "y": 1
                 },
                 {
-                  "x": -3,
+                  "x": 1,
                   "y": 0
                 },
                 {
-                  "x": -3,
+                  "x": 1,
                   "y": 1
                 }
               ],
               "base": {
-                "x": -4,
+                "x": 0,
                 "y": 0
               }
             },

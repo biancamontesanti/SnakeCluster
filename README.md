@@ -54,6 +54,16 @@ The game is authoritative by design:
 - Every interactive menu button and selectable owned cosmetic plays the official Decentraland UI click sound.
 - The UI includes responsive desktop and mobile layouts, a concise How to Play guide, collection screens, scoreboards, and audio settings.
 
+## Planned versions
+
+These are future goals, not features in the current playable build. The full design and release criteria are in [the GDD](design/gdd.md).
+
+| Version | Plan |
+| --- | --- |
+| **v1 — Powers** | Add collectible power capsules. A snake can hold one charge and choose when to activate it. The first power is temporary protection from snake-body collisions; the fence remains lethal. The server controls pickup, activation, and expiration for every player. A food magnet is a second candidate if balance tests support it. |
+| **v2 — Dune XL** | Make the arena substantially larger and more three-dimensional, with sculpted dunes, deeper scenery, and more dimensional snakes. Keep food, rivals, and the lethal boundary readable on desktop and mobile. |
+| **v3 — Personalization** | Add more ways to customize snakes—patterns, heads, eyes, trails, and effects—and the arena's visual theme, props, and lighting. Cosmetics must not change speed, hitboxes, or the shared collision layout. |
+
 ## Run locally
 
 ### Creator Hub (recommended)
